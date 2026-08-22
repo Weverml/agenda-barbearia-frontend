@@ -15,14 +15,14 @@ function App() {
     setUsuarios([...usuarios, { id: proximoId, ...novo }])
   }
 
-  return (
+    return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login usuarios={usuarios} onLogin={setUsuarioLogado} />} />
         <Route path="/cadastro" element={<Cadastro usuarios={usuarios} onCadastrar={cadastrar} />} />
         <Route path="/home" element={<Home usuarioLogado={usuarioLogado} onSair={() => setUsuarioLogado(null)} />} />
-        <Route path="/agendamentos" element={<Agendamentos usuarioLogado={usuarioLogado} />} />
+        <Route path="/agendamentos" element={<Agendamentos usuarioLogado={usuarioLogado} onSair={() => setUsuarioLogado(null)} />} />
       </Routes>
     </BrowserRouter>
   )
