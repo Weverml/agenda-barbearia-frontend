@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #1b1713;
+  color: #f3ead7;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+}
+
+:root {
+  --bg: #1b1713;
+  --bg-elevado: #25201a;
+  --bg-painel: #2e2620;
+  --borda: #3c3228;
+  --dourado: #c9a227;
+  --dourado-claro: #e3c466;
+  --creme: #f3ead7;
+  --muted: #b3a594;
+  --verde: #5c8a5c;
+  --azul: #4d7fa3;
+  --vermelho: #b6453c;
+}
