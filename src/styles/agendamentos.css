@@ -187,3 +187,131 @@
   text-align: center;
   padding: 32px;
 }
+
+/* ---------- TABELA CRUD ---------- */
+.crud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.btn-novo {
+  background: var(--dourado);
+  border: none;
+  border-radius: 8px;
+  color: #1b1713;
+  font-family: 'Oswald', sans-serif;
+  font-size: .85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.btn-novo:hover { background: var(--dourado-claro); }
+
+.crud-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.crud-table th {
+  text-align: left;
+  font-family: 'Oswald', sans-serif;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.crud-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--borda);
+  color: var(--creme);
+  font-size: .9rem;
+}
+
+.crud-table tr:hover td {
+  background: var(--bg-painel);
+}
+
+.crud-table-card {
+  background: var(--bg-elevado);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.btn-editar {
+  background: none;
+  border: 1px solid var(--azul);
+  border-radius: 6px;
+  color: var(--azul);
+  font-size: .78rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 6px;
+  transition: background .2s;
+}
+
+.btn-editar:hover { background: rgba(77,127,163,.15); }
+
+/* ---------- MODAL ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--bg-elevado);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 28px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.modal-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  color: var(--creme);
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
+
+.btn-cancelar {
+  background: none;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: .85rem;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover { border-color: var(--creme); color: var(--creme); }
+
+.tabela-vazia {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  padding: 32px;
+}
