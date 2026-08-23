@@ -1,27 +1,32 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router'
+import { cadastrarUsuario } from '../services/api'
 import '../styles/auth.css'
 
-function Cadastro({ usuarios, onCadastrar }) {
+function Cadastro() {
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [erro, setErro] = useState('')
+  const [carregando, setCarregando] = useState(false)
   const navigate = useNavigate()
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     setErro('')
     if (!nome || !email || !senha) {
       setErro('Preencha todos os campos.')
       return
     }
-    if (usuarios.some(u => u.email === email)) {
-      setErro('Este e-mail já está cadastrado.')
-      return
+    setCarregando(true)
+    try {
+      await cadastrarUsuario({ nome, email, senha })
+      navigate('/login')
+    } catch (err) {
+      setErro(err.message)
+    } finally {
+      setCarregando(false)
     }
-    onCadastrar({ nome, email, senha })
-    navigate('/login')
   }
 
   return (
@@ -84,7 +89,9 @@ function Cadastro({ usuarios, onCadastrar }) {
             </div>
 
             {erro && <p className="auth-erro">{erro}</p>}
-            <button type="submit" className="auth-btn">Cadastrar</button>
+            <button type="submit" className="auth-btn" disabled={carregando}>
+              {carregando ? 'Cadastrando...' : 'Cadastrar'}
+            </button>
           </form>
 
           <div className="auth-link">

@@ -1,20 +1,35 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { useEffect } from 'react'
 import Sidebar from './Sidebar'
+import { listarAgendamentos, listarClientes, listarBarbeiros, listarServicos } from '../services/api'
 import '../styles/dashboard.css'
-
-const agendamentosSimulados = [
-  { id: 1, cliente: 'Carlos Eduardo', barbeiro: 'Marcos Oliveira', servico: 'Corte Degradê & Barba', hora: '14:30', status: 'confirmado' },
-  { id: 2, cliente: 'Fernando Henrique', barbeiro: 'Lucas Souza', servico: 'Corte Social Premium', hora: '15:15', status: 'pendente' },
-  { id: 3, cliente: 'Alexandre Pires', barbeiro: 'Marcos Oliveira', servico: 'Grooming Barba Completa', hora: '16:00', status: 'confirmado' },
-  { id: 4, cliente: 'Maurício Santana', barbeiro: 'Guilherme Reis', servico: 'Corte Clássico', hora: '17:30', status: 'cancelado' },
-]
 
 function Home({ usuarioLogado, onSair }) {
   const navigate = useNavigate()
+  const [agendamentos, setAgendamentos] = useState([])
+  const [clientes, setClientes] = useState([])
+  const [barbeiros, setBarbeiros] = useState([])
+  const [servicos, setServicos] = useState([])
+  const [carregando, setCarregando] = useState(true)
+  const [erro, setErro] = useState('')
 
   useEffect(() => {
-    if (!usuarioLogado) navigate('/login')
+    if (!usuarioLogado) { navigate('/login'); return }
+
+    Promise.all([
+      listarAgendamentos(),
+      listarClientes(),
+      listarBarbeiros(),
+      listarServicos(),
+    ])
+      .then(([ags, cls, bars, servs]) => {
+        setAgendamentos(ags)
+        setClientes(cls)
+        setBarbeiros(bars)
+        setServicos(servs)
+      })
+      .catch(err => setErro(err.message))
+      .finally(() => setCarregando(false))
   }, [usuarioLogado, navigate])
 
   if (!usuarioLogado) return null
@@ -29,6 +44,10 @@ function Home({ usuarioLogado, onSair }) {
   const hoje = new Date().toLocaleDateString('pt-BR', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   })
+
+  function getNome(lista, id) {
+    return lista.find(i => i.id === Number(id))?.nome || '-'
+  }
 
   function handleSair() {
     onSair()
@@ -50,56 +69,67 @@ function Home({ usuarioLogado, onSair }) {
           </div>
         </div>
 
-        <div className="resumo-grid">
-          <div className="resumo-card">
-            <div>
-              <p className="resumo-label">Clientes Cadastrados</p>
-              <p className="resumo-numero">127</p>
-            </div>
-            <span className="resumo-icon">👥</span>
-          </div>
-          <div className="resumo-card">
-            <div>
-              <p className="resumo-label">Barbeiros Ativos</p>
-              <p className="resumo-numero">8</p>
-            </div>
-            <span className="resumo-icon">✂️</span>
-          </div>
-          <div className="resumo-card">
-            <div>
-              <p className="resumo-label">Serviços Oferecidos</p>
-              <p className="resumo-numero">15</p>
-            </div>
-            <span className="resumo-icon">💈</span>
-          </div>
-          <div className="resumo-card">
-            <div>
-              <p className="resumo-label">Agendamentos Hoje</p>
-              <p className="resumo-numero">12</p>
-            </div>
-            <span className="resumo-icon">📅</span>
-          </div>
-        </div>
+        {carregando && <p style={{ color: 'var(--muted)' }}>Carregando...</p>}
+        {erro && <p style={{ color: 'var(--vermelho)' }}>{erro}</p>}
 
-        <div className="section-header">
-          <h2 className="section-title">Próximos Agendamentos</h2>
-        </div>
+        {!carregando && !erro && (
+          <>
+            <div className="resumo-grid">
+              <div className="resumo-card">
+                <div>
+                  <p className="resumo-label">Clientes Cadastrados</p>
+                  <p className="resumo-numero">{clientes.length}</p>
+                </div>
+                <span className="resumo-icon">👥</span>
+              </div>
+              <div className="resumo-card">
+                <div>
+                  <p className="resumo-label">Barbeiros Ativos</p>
+                  <p className="resumo-numero">{barbeiros.length}</p>
+                </div>
+                <span className="resumo-icon">✂️</span>
+              </div>
+              <div className="resumo-card">
+                <div>
+                  <p className="resumo-label">Serviços Oferecidos</p>
+                  <p className="resumo-numero">{servicos.length}</p>
+                </div>
+                <span className="resumo-icon">💈</span>
+              </div>
+              <div className="resumo-card">
+                <div>
+                  <p className="resumo-label">Agendamentos Hoje</p>
+                  <p className="resumo-numero">{agendamentos.length}</p>
+                </div>
+                <span className="resumo-icon">📅</span>
+              </div>
+            </div>
 
-        {agendamentosSimulados.map(a => (
-          <div key={a.id} className="agendamento-item" data-status={a.status}>
-            <div>
-              <p className="agendamento-nome">
-                {a.cliente}
-                <span className={`badge badge-${a.status}`}>{a.status}</span>
-              </p>
-              <p className="agendamento-detalhe">✂️ Barbeiro: {a.barbeiro} &nbsp;💈 Serviço: {a.servico}</p>
+            <div className="section-header">
+              <h2 className="section-title">Próximos Agendamentos</h2>
             </div>
-            <div className="agendamento-direita">
-              <p className="agendamento-hora">{a.hora}</p>
-              <p className="agendamento-dia">Hoje</p>
-            </div>
-          </div>
-        ))}
+
+            {agendamentos.length === 0 && (
+              <p style={{ color: 'var(--muted)', fontStyle: 'italic' }}>Nenhum agendamento cadastrado.</p>
+            )}
+
+            {agendamentos.map(a => (
+              <div key={a.id} className="agendamento-item" data-status={a.status}>
+                <div>
+                  <p className="agendamento-nome">
+                    {getNome(clientes, a.clienteId)}
+                    <span className={`badge badge-${a.status}`}>{a.status}</span>
+                  </p>
+                  <p className="agendamento-detalhe">✂️ Barbeiro: {getNome(barbeiros, a.barbeiroId)} &nbsp;💈 Serviço: {getNome(servicos, a.servicoId)}</p>
+                </div>
+                <div className="agendamento-direita">
+                  <p className="agendamento-hora">{a.hora}</p>
+                  <p className="agendamento-dia">{a.data}</p>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </main>
     </div>
   )

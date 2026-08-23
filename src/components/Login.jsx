@@ -1,23 +1,28 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router'
+import { fazerLogin } from '../services/api'
 import '../styles/auth.css'
 
-function Login({ usuarios, onLogin }) {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [erro, setErro] = useState('')
+  const [carregando, setCarregando] = useState(false)
   const navigate = useNavigate()
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     setErro('')
-    const usuario = usuarios.find(u => u.email === email && u.senha === senha)
-    if (!usuario) {
-      setErro('E-mail ou senha inválidos.')
-      return
+    setCarregando(true)
+    try {
+      const usuario = await fazerLogin(email, senha)
+      onLogin(usuario)
+      navigate('/home')
+    } catch (err) {
+      setErro(err.message)
+    } finally {
+      setCarregando(false)
     }
-    onLogin(usuario)
-    navigate('/home')
   }
 
   return (
@@ -67,7 +72,9 @@ function Login({ usuarios, onLogin }) {
             </div>
 
             {erro && <p className="auth-erro">{erro}</p>}
-            <button type="submit" className="auth-btn">Entrar</button>
+            <button type="submit" className="auth-btn" disabled={carregando}>
+              {carregando ? 'Entrando...' : 'Entrar'}
+            </button>
           </form>
 
           <div className="auth-link">
