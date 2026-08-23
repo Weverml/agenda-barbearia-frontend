@@ -1,0 +1,189 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--creme);
+}
+
+.page-subtitle {
+  color: var(--muted);
+  font-size: .85rem;
+  margin-top: 4px;
+}
+
+/* ---------- FORMULÁRIO ---------- */
+.form-card {
+  background: var(--bg-elevado);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 28px;
+}
+
+.form-card-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--dourado-claro);
+  margin-bottom: 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.form-group label {
+  display: block;
+  color: var(--muted);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: 6px;
+}
+
+.form-select,
+.form-input {
+  width: 100%;
+  background: var(--bg-painel);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  color: var(--creme);
+  font-family: 'Inter', sans-serif;
+  font-size: .88rem;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.form-select:focus,
+.form-input:focus {
+  border-color: var(--dourado);
+}
+
+.form-select option {
+  background: var(--bg-painel);
+}
+
+.btn-agendar {
+  background: var(--dourado);
+  border: none;
+  border-radius: 8px;
+  color: #1b1713;
+  font-family: 'Oswald', sans-serif;
+  font-size: .85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 10px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s;
+  height: 40px;
+}
+
+.btn-agendar:hover {
+  background: var(--dourado-claro);
+}
+
+/* ---------- LISTA ---------- */
+.lista-titulo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--creme);
+  margin-bottom: 16px;
+}
+
+.agendamento-card {
+  background: var(--bg-elevado);
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--dourado);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.agendamento-card[data-status="confirmado"] { border-left-color: var(--azul); }
+.agendamento-card[data-status="concluido"]  { border-left-color: var(--verde); }
+.agendamento-card[data-status="cancelado"]  { border-left-color: var(--vermelho); }
+
+.agendamento-card-nome {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: var(--creme);
+  margin-bottom: 4px;
+}
+
+.agendamento-card-detalhe {
+  color: var(--muted);
+  font-size: .82rem;
+  margin-bottom: 2px;
+}
+
+.agendamento-card-direita {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.agendamento-card-hora {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  color: var(--dourado-claro);
+  text-align: right;
+}
+
+.agendamento-card-data {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.status-select {
+  background: var(--bg-painel);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  color: var(--creme);
+  font-size: .78rem;
+  padding: 6px 8px;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-remover {
+  background: rgba(182,69,60,.15);
+  border: 1px solid var(--vermelho);
+  border-radius: 6px;
+  color: var(--vermelho);
+  font-size: .85rem;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.btn-remover:hover {
+  background: rgba(182,69,60,.3);
+}
+
+.lista-vazia {
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  padding: 32px;
+}
