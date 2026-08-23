@@ -4,22 +4,28 @@ Frontend do sistema de agendamento de barbearia, desenvolvido como Projeto 2 da 
 
 ## 📋 Sobre o projeto
 
-Interface web construída em React consumindo a API do Projeto 1 (Agenda Barbearia API). Permite autenticação de usuários e gerenciamento completo de agendamentos de barbearia.
+Interface web construída em React consumindo a API do Projeto 1 (Agenda Barbearia API). Permite autenticação de usuários e gerenciamento completo de clientes, barbeiros, serviços e agendamentos de barbearia.
 
 ## 🚀 Funcionalidades
 
-- Cadastro de usuário
-- Login simulado com autenticação local
-- Dashboard com resumo do sistema
-- Gerenciamento de agendamentos (criar, alterar status, remover)
+- Cadastro de usuário e login via API
+- Dashboard com resumo do sistema em tempo real
+- CRUD completo de Clientes
+- CRUD completo de Barbeiros
+- CRUD completo de Serviços
+- Gerenciamento de Agendamentos (criar, alterar status, remover)
 - Navegação entre telas com React Router
+- Estados de loading e erro em todas as requisições
 
 ## 🖥️ Telas
 
-- **Login** — autenticação do usuário
+- **Login** — autenticação via API
 - **Cadastro** — criação de nova conta
-- **Dashboard (Home)** — resumo com cards e próximos agendamentos
-- **Agendamentos** — formulário de novo agendamento + lista completa
+- **Dashboard** — resumo com cards e próximos agendamentos
+- **Clientes** — listagem, cadastro, edição e remoção
+- **Barbeiros** — listagem, cadastro, edição e remoção
+- **Serviços** — listagem, cadastro, edição e remoção
+- **Agendamentos** — formulário de novo agendamento + lista completa com status
 
 ## 🛠️ Tecnologias
 
@@ -30,24 +36,34 @@ Interface web construída em React consumindo a API do Projeto 1 (Agenda Barbear
 
 ## 📡 API consumida
 
-Este frontend consome a [Agenda Barbearia API](https://github.com/Weverml/agenda_barbearia) — backend Node.js sem framework, com SQLite, desenvolvido no Projeto 1.
+Este frontend consome a [Agenda Barbearia API](https://github.com/Weverml/agenda-barbearia-api) — backend Node.js sem framework, com SQLite, desenvolvido no Projeto 1.
 
 ## 📁 Estrutura do projeto
 agenda-barbearia-frontend/
 ├── src/
-│ ├── components/ # Componentes de cada tela
+│ ├── components/
 │ │ ├── Login.jsx
 │ │ ├── Cadastro.jsx
 │ │ ├── Home.jsx
-│ │ └── Agendamentos.jsx
-│ ├── data/
-│ │ └── usuarios.js # Dados simulados para autenticação
-│ ├── App.jsx # Rotas e estado global
-│ ├── App.css # Estilos globais
+│ │ ├── Clientes.jsx
+│ │ ├── Barbeiros.jsx
+│ │ ├── Servicos.jsx
+│ │ ├── Agendamentos.jsx
+│ │ └── Sidebar.jsx
+│ ├── services/
+│ │ └── api.js
+│ ├── styles/
+│ │ ├── global.css
+│ │ ├── auth.css
+│ │ ├── dashboard.css
+│ │ └── agendamentos.css
+│ ├── App.jsx
 │ └── main.jsx
+├── .env
 ├── index.html
 ├── package.json
 └── README.md
+
 ## ▶️ Como rodar
 
 ### 1. Instalar dependências
@@ -55,15 +71,28 @@ agenda-barbearia-frontend/
 npm install
 ```
 
-### 2. Rodar o projeto
+### 2. Configurar o ambiente
+Crie um arquivo `.env` na raiz do projeto:
+
+VITE_API_URL=http://localhost:3000
+
+
+### 3. Rodar o projeto
 ```bash
 npm run dev
 ```
 
 Acesse em `http://localhost:5173`
 
-> ⚠️ Para funcionalidades completas (agendamentos, clientes, barbeiros, serviços), a **API do Projeto 1** precisa estar rodando em `http://localhost:3000`.
+> ⚠️ A **API do Projeto 1** precisa estar rodando em `http://localhost:3000` para o sistema funcionar.
 
 ## 🎨 Design
 
 Protótipo desenvolvido no Figma com identidade visual de barbearia premium: tema escuro, paleta dourada e tipografia Oswald + Inter.
+
+- [Ver protótipo no Figma](https://www.figma.com/design/GDoRCdWiU292pvpQWegRGM/Sem-título)
+
+## 👨‍💻 Autor
+
+Weverton Mamede Leite — [@Weverml](https://github.com/Weverml)
+
